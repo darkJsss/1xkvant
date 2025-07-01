@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1xkvant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title">1x<span class="blue">kvant</span></h1>
+            <div class="balance-container">
+                <div class="balance-label">BALANCE</div>
+                <div class="balance" id="balance">{{ balance }}</div>
+                <div class="currency">₿</div>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <div class="slot-machine">
+                <div class="slots-frame">
+                    <div class="slots">
+                        <div class="slot"><div class="slot-inner"><img id="slot1" src="{{ url_for('static', filename='images/1.png') }}" alt=""></div></div>
+                        <div class="slot"><div class="slot-inner"><img id="slot2" src="{{ url_for('static', filename='images/2.png') }}" alt=""></div></div>
+                        <div class="slot"><div class="slot-inner"><img id="slot3" src="{{ url_for('static', filename='images/3.png') }}" alt=""></div></div>
+                    </div>
+                    <div class="win-line"></div>
+                </div>
+
+                <div class="controls">
+                    <div class="bet-controls">
+                        <div class="bet-label">BET SIZE</div>
+                        <div class="bet-buttons">
+                            <button class="bet-btn" data-change="-100">-100</button>
+                            <button class="bet-btn" data-change="-10">-10</button>
+                            <input type="number" id="bet" value="50" min="10" step="10">
+                            <button class="bet-btn" data-change="+10">+10</button>
+                            <button class="bet-btn" data-change="+100">+100</button>
+                        </div>
+                    </div>
+
+                    <button id="spin-btn" class="spin-button">
+                        <span class="spin-text">SPIN</span>
+                        <span class="spin-icon">⟳</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="promo-section">
+                <div class="promo-label">ENTER PROMO CODE</div>
+                <div class="promo-input-container">
+                    <input type="text" id="promo-code" placeholder="BULATIK">
+                    <button id="use-promo" class="promo-button">ACTIVATE</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="message" class="message-box"></div>
+
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <audio id="spin-sound" src="{{ url_for('static', filename='sounds/spin.mp3') }}" preload="auto"></audio>
+    <audio id="win-sound" src="{{ url_for('static', filename='sounds/win.mp3') }}" preload="auto"></audio>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
