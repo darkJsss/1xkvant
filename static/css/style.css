@@ -113,6 +113,12 @@ body {
     color: #4d6eff;
 }
 
+.game-container:focus {
+    outline: 2px solid #4d6eff;
+    outline-offset: 5px;
+    border-radius: 5px;
+}
+
 .game-container {
     background: rgba(20, 35, 120, 0.8);
     border-radius: 20px;

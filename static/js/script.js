@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const usePromoBtn = document.getElementById('use-promo');
     const promoCodeInput = document.getElementById('promo-code');
     const betButtons = document.querySelectorAll('.bet-btn');
+    const spinSound = new Audio('/static/sounds/spin.mp3');
+    const winSound = new Audio('/static/sounds/win.mp3');
     const slotImages = [
         document.getElementById('slot1'),
         document.getElementById('slot2'),
@@ -74,6 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     function spin() {
+        spinSound.currentTime = 0;
+        spinSound.play().catch(e => console.log("Audio play error:", e));
         if (isSpinning) return;
 
         const bet = parseInt(betInput.value);
@@ -89,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hideMessage();
 
         // Время прокрутки (в миллисекундах)
-        const spinDuration = 4000; // 4 секунды общее время
+        const spinDuration = 3100; // 4 секунды общее время
         const startTime = Date.now();
 
         // Частота смены картинок (2 в секунду = 1 картинка каждые 500мс)
@@ -163,9 +167,10 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < 3; i++) {
             slotImages[i].src = `/static/images/${data.result[i]}.png`;
         }
-
         // Check for win
         if (data.win > 0) {
+            winSound.currentTime = 0;
+            winSound.play().catch(e => console.log("Audio play error:", e));
             showMessage(`WIN! +${data.win} coins`, true);
             winLine.classList.add('active');
             createConfetti();
@@ -250,4 +255,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }, duration * 1000);
         }
     }
+});
+
+document.getElementById('spin-btn').addEventListener('click', handleSpinAction);
+    function handleSpinAction() {
+    if (!isSpinning) {
+        spin();
+    }
+document.addEventListener('keydown', function(event) {
+    const activeElement = document.activeElement;
+    const isInputFocused = activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA';
+    if (event.key === 'Enter' && !isInputFocused) {
+        event.preventDefault();
+        handleSpinAction();
+    }
+});
 });

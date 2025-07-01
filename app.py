@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 
 app = Flask(__name__)
 user_balance = 10000
@@ -46,7 +46,6 @@ def spin():
         'balance': user_balance,
         'win': win
     })
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
