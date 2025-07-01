@@ -257,17 +257,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-document.getElementById('spin-btn').addEventListener('click', handleSpinAction);
-    function handleSpinAction() {
-    if (!isSpinning) {
-        spin();
-    }
-document.addEventListener('keydown', function(event) {
-    const activeElement = document.activeElement;
-    const isInputFocused = activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA';
-    if (event.key === 'Enter' && !isInputFocused) {
-        event.preventDefault();
-        handleSpinAction();
-    }
-});
-});
