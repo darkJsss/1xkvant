@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Elements
     const spinBtn = document.getElementById('spin-btn');
     const betInput = document.getElementById('bet');
     const balanceSpan = document.getElementById('balance');
@@ -16,14 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     const winLine = document.querySelector('.win-line');
     const particlesContainer = document.getElementById('particles');
-
-    // State
     let isSpinning = false;
-
-    // Initialize
     updateBalanceDisplay();
-
-    // Event listeners
     betButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             if (isSpinning) return;
@@ -122,11 +115,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const elapsed = Date.now() - startTime;
                 const progress = Math.min(elapsed / spinDuration, 1);
 
-                // Меняем картинки каждые 500мс (2 раза в секунду)
+                // Меняю картинки каждые 500мс (2 раза в секунду)
                 if (elapsed - lastChangeTime >= imageChangeInterval) {
                     lastChangeTime = elapsed - (elapsed % imageChangeInterval);
 
-                    // Показываем случайные картинки во время прокрутки
+                    // Показываю случайные картинки во время прокрутки
                     if (progress < 0.8) {
                         for (let i = 0; i < 3; i++) {
                             const randomValue = Math.floor(Math.random() * 7) + 1;
@@ -136,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Замедление в конце
                     else {
                         for (let i = 0; i < 3; i++) {
-                            // Останавливаем слоты по очереди
+                            // Останавливал слоты по очереди
                             if (progress > 0.8 + i * 0.1) {
                                 slotImages[i].src = `/static/images/${data.result[i]}.png`;
                             } else {
@@ -150,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (progress < 1) {
                     requestAnimationFrame(animateSpin);
                 } else {
-                    // Убедимся, что все слоты показывают финальные картинки
+                    // Убедился, что все слоты показывают финальные картинки
                     for (let i = 0; i < 3; i++) {
                         slotImages[i].src = `/static/images/${data.result[i]}.png`;
                     }
@@ -163,11 +156,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function finishSpin(data) {
-        // Set final images
         for (let i = 0; i < 3; i++) {
             slotImages[i].src = `/static/images/${data.result[i]}.png`;
         }
-        // Check for win
+        // проверка на победу
         if (data.win > 0) {
             winSound.currentTime = 0;
             winSound.play().catch(e => console.log("Audio play error:", e));
@@ -182,10 +174,8 @@ document.addEventListener('DOMContentLoaded', function() {
             showMessage('Try Again!', false);
         }
 
-        // Update balance (including any winnings)
+        // меняю баланса
         balanceSpan.textContent = data.balance;
-
-        // Reset spin state
         setTimeout(() => {
             winLine.classList.remove('active');
             isSpinning = false;
@@ -221,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const particle = document.createElement('div');
             particle.classList.add('particle');
 
-            // Random properties
+            // математика
             const x = Math.random() * 100;
             const y = Math.random() * 100 - 10;
             const size = Math.random() * 6 + 2;
@@ -230,8 +220,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const duration = Math.random() * 3 + 2;
             const angle = Math.random() * Math.PI * 2;
             const distance = Math.random() * 100 + 50;
-
-            // Apply styles
             particle.style.left = `${x}%`;
             particle.style.top = `${y}%`;
             particle.style.width = `${size}px`;
@@ -243,13 +231,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             particlesContainer.appendChild(particle);
 
-            // Animate
+            // анимация
             setTimeout(() => {
                 particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
                 particle.style.opacity = '0';
             }, 10);
-
-            // Remove after animation
             setTimeout(() => {
                 particle.remove();
             }, duration * 1000);
